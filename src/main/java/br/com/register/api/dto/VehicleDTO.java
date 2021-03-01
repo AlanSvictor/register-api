@@ -41,6 +41,9 @@ public class VehicleDTO {
     @JsonIgnore
     private String updated;
 
+    @NotNull
+    private boolean isSold;
+
     public static VehicleDTO buildDTO(Vehicle vehicle) {
         VehicleDTO vehicleDTO = new VehicleDTO();
         vehicleDTO.setId(vehicle.getId());
@@ -50,10 +53,11 @@ public class VehicleDTO {
         vehicleDTO.setDescription(vehicleDTO.getDescription());
         vehicleDTO.setCreated(vehicle.getCreated().format(formatter));
         vehicleDTO.setUpdated(vehicle.getUpdated().format(formatter));
+        vehicleDTO.setSold(vehicle.isSold());
         return vehicleDTO;
     }
 
     public Vehicle buildToEntity () {
-        return new Vehicle(this.vehicle, this.brand, this.year, this.description);
+        return new Vehicle(this.vehicle, this.brand, this.year, this.description, this.isSold);
     }
 }
