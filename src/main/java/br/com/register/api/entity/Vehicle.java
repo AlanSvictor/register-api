@@ -2,9 +2,12 @@ package br.com.register.api.entity;
 
 import br.com.register.api.dto.Brand;
 
+import br.com.register.api.dto.VehicleDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -18,6 +21,7 @@ import java.time.YearMonth;
 @Getter
 @ToString
 @Table(name = "vehicle")
+@NoArgsConstructor
 public class Vehicle {
 
     @Id
@@ -49,6 +53,11 @@ public class Vehicle {
     @Column(name = "updated")
     private LocalDateTime updated;
 
+    @NotNull
+    @Column(name = "sold")
+    @Value("false")
+    private boolean isSold;
+
     @PreUpdate
     private void preUpdate() {
         updated = LocalDateTime.now();
@@ -61,10 +70,19 @@ public class Vehicle {
         created = now;
     }
 
-    public Vehicle (String vehicle, Brand brand, int year, String description) {
+    public Vehicle (String vehicle, Brand brand, int year, String description, boolean isSold) {
         this.vehicle = vehicle;
         this.brand = brand;
         this.year = year;
         this.description = description;
+        this.isSold = isSold;
+    }
+
+    public void update (VehicleDTO vehicleDTO){
+        this.vehicle = vehicleDTO.getVehicle();
+        this.description = vehicleDTO.getDescription();
+        this.year = vehicleDTO.getYear();
+        this.brand = vehicleDTO.getBrand();
+
     }
 }
