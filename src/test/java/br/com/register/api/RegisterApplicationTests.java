@@ -1,4 +1,4 @@
-package com.api.register;
+package br.com.register.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,6 +1,6 @@
-package com.api.register.repository;
+package br.com.register.api.repository;
 
-import com.api.register.entity.Vehicle;
+import br.com.register.api.entity.Vehicle;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
