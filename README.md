@@ -1,4 +1,4 @@
-https://travis-ci.org/AlanSvictor/register-api.svg?branch=main
+[![Build Status](https://travis-ci.org/AlanSvictor/register-api.svg?branch=main)](https://travis-ci.org/AlanSvictor/register-api)
 
 # Registro de Veículos
 
