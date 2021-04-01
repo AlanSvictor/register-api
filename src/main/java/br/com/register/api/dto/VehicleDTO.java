@@ -23,8 +23,9 @@ public class VehicleDTO {
     @JsonIgnore
     private Long id;
 
-    @NotEmpty(message = "Vehicle name cannot be empty")
-    @Length(min = 2, max = 200, message = "Vehicle name must contain between 3 and 200 characters")
+    @NotNull
+    @NotEmpty
+    @Length(min = 2, max = 200)
     private String vehicle;
 
     @NotNull(message = "Vehicle brand cannot be empty")

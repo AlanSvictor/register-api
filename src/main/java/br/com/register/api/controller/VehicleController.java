@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,10 +28,14 @@ public class VehicleController {
     private VehicleService vehicleService;
 
     @PostMapping
-    public ResponseEntity<?> save(@Valid @RequestBody VehicleDTO vehicleDTO) {
+    public ResponseEntity<?> save(@Valid @RequestBody VehicleDTO vehicleDTO, UriComponentsBuilder uriBuilder) {
         log.info("Post insert vehicleDTO: {}", vehicleDTO);
 
-        return ResponseEntity.ok(VehicleDTO.buildDTO(vehicleService.persist(vehicleDTO.buildToEntity())));
+        Vehicle vehicle = vehicleDTO.buildToEntity();
+        vehicleService.persist(vehicle);
+
+        URI uri = uriBuilder.path("/api/vehicles/{id}").buildAndExpand(vehicle.getId()).toUri();
+        return ResponseEntity.created(uri).body(VehicleDTO.buildDTO(vehicle));
     }
 
     @PutMapping(value = "/{id}")
