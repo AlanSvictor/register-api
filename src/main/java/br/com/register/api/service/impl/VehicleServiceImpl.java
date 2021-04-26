@@ -9,10 +9,13 @@ import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -75,5 +78,16 @@ public class VehicleServiceImpl implements VehicleService {
         vehicleDataDTO.setVehiclesRegisteredLastWeek(vehiclesRegistered);
 
         return vehicleDataDTO;
+    }
+
+    @Override
+    public Optional<Page<VehicleDTO>> findAll(Pageable pageable) {
+        Page<Vehicle> all = vehicleRepository.findAll(pageable);
+        return Optional.of(all.map(VehicleDTO::buildDTO));
+    }
+
+    @Override
+    public List<Vehicle> findAll() {
+        return new ArrayList<>(vehicleRepository.findAll());
     }
 }

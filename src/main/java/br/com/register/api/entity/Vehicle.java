@@ -87,6 +87,5 @@ public class Vehicle {
         this.description = vehicleDTO.getDescription();
         this.year = vehicleDTO.getYear();
         this.brand = vehicleDTO.getBrand();
-
     }
 }
