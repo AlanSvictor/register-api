@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.annotation.PostConstruct;
+import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication
 public class RegisterApplication {
@@ -20,4 +21,9 @@ public class RegisterApplication {
 //		System.out.println(passwordEncoder.encode("devdojo"));
 //	}
 
+//	@PostConstruct
+//	public void postConstruct() {
+//	convert one day in milliSeconds
+//		System.out.println(TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS));
+//	}
 }
