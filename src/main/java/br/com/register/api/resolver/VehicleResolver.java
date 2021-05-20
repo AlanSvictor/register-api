@@ -2,8 +2,8 @@ package br.com.register.api.resolver;
 
 import br.com.register.api.entity.Vehicle;
 import br.com.register.api.service.VehicleService;
-import com.coxautodev.graphql.tools.GraphQLMutationResolver;
-import com.coxautodev.graphql.tools.GraphQLQueryResolver;
+import graphql.kickstart.tools.GraphQLMutationResolver;
+import graphql.kickstart.tools.GraphQLQueryResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
