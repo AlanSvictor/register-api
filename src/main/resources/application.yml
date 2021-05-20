@@ -1,0 +1,67 @@
+server:
+  port: 8070
+  error:
+    include-message: always
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5480/dbRegister
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+  application:
+    name: register
+    profiles-active: dev
+
+graphql:
+  servlet:
+    mapping: /graphql
+    enabled: true
+    corsEnabled: true
+    subscriptions:
+      websocket:
+        path: /ssuubbssccrriippttiioonnss
+  playground:
+    mapping: /playground
+    endpoint: /graphql
+    subscriptionsEndpoint: /subscriptions
+    staticFolder.basePath: my-playground-resources-folder
+    enabled: true
+    pageTitle: Playground - Copernico [${environment}]
+    cdn:
+      enabled: false
+      version: latest
+    settings:
+      editor.cursorShape: line
+      editor.fontFamily: "'Source Code Pro', 'Consolas', 'Inconsolata', 'Droid Sans Mono', 'Monaco', monospace"
+      editor.fontSize: 14
+      editor.reuseHeaders: true
+      editor.theme: dark
+      general.betaUpdates: false
+      prettier.printWidth: 80
+      prettier.tabWidth: 2
+      prettier.useTabs: false
+      request.credentials: omit
+      schema.polling.enable: true
+      schema.polling.endpointFilter: "*localhost*"
+      schema.polling.interval: 3600000 #1 hr
+      schema.disableComments: true
+      tracing.hideTracingResponse: true
+    headers:
+      Authorization: PasteYourTokenHere
+    tabs:
+      - name: Examples Prefiled Tab
+        query: classpath:graphql/examples/exampleQueryFilled.graphql
+#        variables: classpath:graphql/examples/variables.json
+#        responses:
+#          - classpath:graphql/examples/exampleResponse1.json
