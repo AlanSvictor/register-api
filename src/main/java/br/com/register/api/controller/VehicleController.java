@@ -2,6 +2,7 @@ package br.com.register.api.controller;
 
 import br.com.register.api.dto.VehicleDTO;
 import br.com.register.api.dto.VehicleDataDTO;
+import br.com.register.api.entity.UserPrincipal;
 import br.com.register.api.entity.Vehicle;
 import br.com.register.api.service.VehicleService;
 import ch.qos.logback.core.boolex.EvaluationException;
@@ -14,6 +15,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -24,7 +28,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/vehicles")
-@CrossOrigin(origins = "*")
 public class VehicleController {
 
     private static final Logger log = LoggerFactory.getLogger(VehicleController.class);
@@ -86,13 +89,16 @@ public class VehicleController {
     }
 
     @GetMapping(value = "/vehicles")
-    public ResponseEntity<?> vehicleData() {
+    public ResponseEntity<?> vehicleData(@AuthenticationPrincipal User userPrincipal) {
+        System.out.println(userPrincipal);
         VehicleDataDTO vehicleDataDTO = vehicleService.populateVehicleData();
         return ResponseEntity.ok(vehicleDataDTO);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> delete (@PathVariable("id") Long id){
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> delete (@PathVariable("id") Long id, @AuthenticationPrincipal User userPrincipal){
+        System.out.println(userPrincipal);
         log.info("Get delete vehicle by id: {}", id);
 
         Optional<Vehicle> vehicle = vehicleService.findById(id);
