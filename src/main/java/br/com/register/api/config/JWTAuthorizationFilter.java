@@ -30,10 +30,24 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String header = request.getHeader(HEADER_STRING);
 
-        if (header == null || !header.startsWith(TOKEN_PREFIX)){
+        if (header == null) {
             chain.doFilter(request, response);
             return;
         }
+
+        if (request.getHttpServletMapping().getPattern().equals("/graphql/*")) {
+            if (header.equals("PasteYourTokenHere")){
+                chain.doFilter(request, response);
+                return;
+            }
+
+        } else {
+            if (!header.startsWith(TOKEN_PREFIX)){
+                chain.doFilter(request, response);
+                return;
+            }
+        }
+
         UsernamePasswordAuthenticationToken authenticationToken = getAuthenticationToken(request);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         chain.doFilter(request, response);
