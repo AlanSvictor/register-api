@@ -30,24 +30,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, SIGN_UP_URL).permitAll()
                 .antMatchers("/playground/**").permitAll()
-//                .antMatchers("/graphql/**").permitAll()
-//                .antMatchers("/actuator/**").permitAll()
-//                .antMatchers("/playground").permitAll()
-//                .antMatchers("/graphql").permitAll()
-//                .antMatchers("/actuator").permitAll()
                 .anyRequest().authenticated()
+                .and()
+                .httpBasic()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager(), customUserDetailService));
 
-//        http.authorizeRequests()
-////                .anyRequest().authenticated() Todas as url são autenticadas
-////                .antMatchers("/*/students/**").hasRole("USER") /Significa que toda url com /alguma coisa/students/ devera ter a role USER
-//                .anyRequest().authenticated()
-//                .and()
-//                .httpBasic()
-//                .and()
-//                .csrf().disable();
     }
 
     @Override
